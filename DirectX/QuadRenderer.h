@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 #include "Window.h"
 #include "GraphicsEngine.h"
 #include "SwapChain.h"
@@ -29,3 +29,4 @@ public:
 	vertex vectorList[4];
 	VertexBuffer* m_vb;
 };
+*/

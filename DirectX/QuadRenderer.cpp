@@ -1,4 +1,4 @@
-#include "QuadRenderer.h"
+/*#include "QuadRenderer.h"
 
 QuadRenderer::QuadRenderer(vec3 a, vec3 b, vec3 c, vec3 d)
 {
@@ -23,7 +23,7 @@ void QuadRenderer::initialize()
 
 	void* shader_byte_code = nullptr;
 	UINT size_shader = 0;
-	GraphicsEngine::get()->getShaderBufferAndSize(&shader_byte_code, &size_shader);
+	//GraphicsEngine::get()->getShaderBufferAndSize(&shader_byte_code, &size_shader);
 
 	m_vb->load(this->vectorList, sizeof(vertex), size_list, shader_byte_code, size_shader);
 }
@@ -46,3 +46,4 @@ void QuadRenderer::release()
 		m_vb = nullptr;
 	}
 }
+*/

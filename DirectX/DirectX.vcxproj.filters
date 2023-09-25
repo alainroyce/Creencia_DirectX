@@ -13,17 +13,23 @@
     <Filter Include="GameEngine\GraphicsEngine">
       <UniqueIdentifier>{2e1d921e-8e62-4c76-afc8-d6346a315551}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameEngine\VertexBuffer">
-      <UniqueIdentifier>{cf46315e-9452-4558-a6f7-bff8f2782a7a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameEngine\DeviceContext">
+    <Filter Include="GameEngine\GraphicsEngine\DeviceContext">
       <UniqueIdentifier>{25c4771d-9a84-44af-9f85-25f6f361ba1a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameEngine\SwapChain">
+    <Filter Include="GameEngine\GraphicsEngine\QuadRenderer">
+      <UniqueIdentifier>{bbe90181-4de4-4ee9-ba95-864b69fa4356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\SwapChain">
       <UniqueIdentifier>{d55453bb-62ee-4ced-a58a-62184fe7bab6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameEngine\QuadRenderer">
-      <UniqueIdentifier>{bbe90181-4de4-4ee9-ba95-864b69fa4356}</UniqueIdentifier>
+    <Filter Include="GameEngine\GraphicsEngine\VertexBuffer">
+      <UniqueIdentifier>{cf46315e-9452-4558-a6f7-bff8f2782a7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\VertexShader">
+      <UniqueIdentifier>{f6ac0425-a84b-43cf-8751-e43f21338d38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\PixelShader">
+      <UniqueIdentifier>{38e052b8-a01f-46f7-92eb-e39d7871e37b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,16 +46,22 @@
       <Filter>GameEngine\GraphicsEngine</Filter>
     </ClCompile>
     <ClCompile Include="VertexBuffer.cpp">
-      <Filter>GameEngine\VertexBuffer</Filter>
+      <Filter>GameEngine\GraphicsEngine\VertexBuffer</Filter>
     </ClCompile>
     <ClCompile Include="DeviceContext.cpp">
-      <Filter>GameEngine\DeviceContext</Filter>
+      <Filter>GameEngine\GraphicsEngine\DeviceContext</Filter>
     </ClCompile>
     <ClCompile Include="SwapChain.cpp">
-      <Filter>GameEngine\SwapChain</Filter>
+      <Filter>GameEngine\GraphicsEngine\SwapChain</Filter>
     </ClCompile>
     <ClCompile Include="QuadRenderer.cpp">
-      <Filter>GameEngine\QuadRenderer</Filter>
+      <Filter>GameEngine\GraphicsEngine\QuadRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShader.cpp">
+      <Filter>GameEngine\GraphicsEngine\VertexShader</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelShader.cpp">
+      <Filter>GameEngine\GraphicsEngine\PixelShader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -63,19 +75,31 @@
       <Filter>GameEngine\GraphicsEngine</Filter>
     </ClInclude>
     <ClInclude Include="VertexBuffer.h">
-      <Filter>GameEngine\VertexBuffer</Filter>
+      <Filter>GameEngine\GraphicsEngine\VertexBuffer</Filter>
     </ClInclude>
     <ClInclude Include="DeviceContext.h">
-      <Filter>GameEngine\DeviceContext</Filter>
+      <Filter>GameEngine\GraphicsEngine\DeviceContext</Filter>
     </ClInclude>
     <ClInclude Include="SwapChain.h">
-      <Filter>GameEngine\SwapChain</Filter>
+      <Filter>GameEngine\GraphicsEngine\SwapChain</Filter>
     </ClInclude>
     <ClInclude Include="QuadRenderer.h">
-      <Filter>GameEngine\QuadRenderer</Filter>
+      <Filter>GameEngine\GraphicsEngine\QuadRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>GameEngine\GraphicsEngine\VertexShader</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelShader.h">
+      <Filter>GameEngine\GraphicsEngine\PixelShader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader.fx" />
+    <FxCompile Include="VertexShader.hlsl">
+      <Filter>App</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelShader.hlsl">
+      <Filter>App</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

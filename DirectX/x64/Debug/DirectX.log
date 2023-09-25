@@ -1,2 +1,7 @@
-﻿  QuadRenderer.cpp
+﻿  AppWindow.cpp
+  DeviceContext.cpp
+  GraphicsEngine.cpp
+  VertexBuffer.cpp
+  main.cpp
+  Generating Code...
   DirectX.vcxproj -> C:\Users\alain\source\repos\DirectX\x64\Debug\DirectX.exe

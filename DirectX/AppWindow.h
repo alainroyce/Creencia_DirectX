@@ -4,9 +4,8 @@
 #include "SwapChain.h"
 #include "DeviceContext.h"
 #include "VertexBuffer.h"
-
-#include "QuadRenderer.h"
-#include <vector>
+#include "VertexShader.h"
+#include "PixelShader.h"
 
 class AppWindow : public Window
 {
@@ -19,7 +18,8 @@ public:
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
 private:
-	std::vector<QuadRenderer> quadList;
 	SwapChain* m_swap_chain;
 	VertexBuffer* m_vb;
+	VertexShader* m_vs;
+	PixelShader* m_ps;
 };

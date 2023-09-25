@@ -1,5 +1,15 @@
 #include "AppWindow.h"
 
+struct vec3
+{
+	float x, y, z;
+};
+
+struct vertex
+{
+	vec3 position;
+	vec3 color;
+};
 
 AppWindow::AppWindow()
 {
@@ -19,66 +29,62 @@ void AppWindow::onCreate()
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	QuadRenderer quad1
-	(
-		{ 0.80f,0.30f,0.0f },        // INDEX 0
-		{ 0.30f,0.30f,0.0f },        // INDEX 1
-		{ 0.80f,0.80f,0.0f },        // INDEX 2
-		{ 0.30f,0.80f,0.0f }       // INDEX 3
-	);
+	vertex list[] =
+	{
+		//X - Y - Z
+		{-0.5f,-0.5f,0.0f,   0,0,0}, // POS1
+		{-0.5f,0.5f,0.0f,    1,1,0}, // POS2
+		{ 0.5f,-0.5f,0.0f,   0,0,1},// POS2
+		{ 0.5f,0.5f,0.0f,    1,1,1}
+	};
 
-	QuadRenderer quad2
-	(
-		{ 0.25f,-0.25f,0.0f },    // INDEX 4
-		{ -0.25f,-0.25f,0.0f },    // INDEX 5
-		{ 0.25f,0.25f,0.0f },        // INDEX 6
-		{ -0.25f,0.25f,0.0f }    // INDEX 7
-	);
+	m_vb = GraphicsEngine::get()->createVertexBuffer();
+	UINT size_list = ARRAYSIZE(list);
 
-	QuadRenderer quad3
-	(
-		{ -0.30f,-0.80f,0.0f },    // INDEX 8
-		{ -0.80f,-0.80f,0.0f },    // INDEX 9
-		{ -0.30f,-0.30f,0.0f },    // INDEX 10
-		{ -0.80f,-0.30f,0.0f }    // INDEX 11
-	);
+	void* shader_byte_code = nullptr;
+	size_t size_shader = 0;
+	GraphicsEngine::get()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 
-	quadList.push_back(quad1);
-	quadList.push_back(quad2);
-	quadList.push_back(quad3);
+	m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
+	m_vb->load(list, sizeof(vertex), size_list, shader_byte_code, size_shader);
 
-	
+	GraphicsEngine::get()->releaseCompiledShader();
+
+
+	GraphicsEngine::get()->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
+	m_ps = GraphicsEngine::get()->createPixelShader(shader_byte_code, size_shader);
+	GraphicsEngine::get()->releaseCompiledShader();
+
 }
 
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
 	//CLEAR THE RENDER TARGET 
-	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0, 0.3f, 0.4f, 1);
+	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,
+		0, 0.3f, 0.4f, 1);
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	GraphicsEngine::get()->setShaders();
+	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexShader(m_vs);
+	GraphicsEngine::get()->getImmediateDeviceContext()->setPixelShader(m_ps);
 
 
-	for (QuadRenderer quad : quadList)
-	{
-		quad.render();
-	}
+	//SET THE VERTICES OF THE TRIANGLE TO DRAW
+	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexBuffer(m_vb);
 
-
+	// FINALLY DRAW THE TRIANGLE
+	GraphicsEngine::get()->getImmediateDeviceContext()->drawTriangleStrip(m_vb->getSizeVertexList(), 0);
 	m_swap_chain->present(true);
 }
 
 void AppWindow::onDestroy()
 {
 	Window::onDestroy();
-	//m_vb->release();
-	for (QuadRenderer quad : quadList)
-	{
-		quad.release();
-	}
+	m_vb->release();
 	m_swap_chain->release();
+	m_vs->release();
+	m_ps->release();
 	GraphicsEngine::get()->release();
 }
