@@ -17,6 +17,7 @@ struct VS_OUTPUT
 cbuffer constant: register(b0)
 {
 	float m_angle;
+	float m_time;
 };
 
 

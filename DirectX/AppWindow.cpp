@@ -1,7 +1,9 @@
 #include "AppWindow.h"
 #include <Windows.h>
+#include <iostream>
+#include "EngineTime.h"
 
-
+using namespace std;
 struct vec3
 {
 	float x, y, z;
@@ -20,6 +22,7 @@ __declspec(align(16))
 struct constant
 {
 	float m_angle;
+	float m_time;
 };
 
 
@@ -44,10 +47,10 @@ void AppWindow::onCreate()
 	vertex list[] =
 	{
 		//X - Y - Z
-		{-0.5f,-0.5f,0.0f,    -0.32f,-0.11f,0.0f,   0,0,0,  0,1,0 }, 
-		{-0.5f,0.5f,0.0f,     -0.11f,0.78f,0.0f,    1,1,0,  0,1,1 }, 
-		{ 0.5f,-0.5f,0.0f,     0.75f,-0.73f,0.0f,   0,0,1,  1,0,0 },
-		{ 0.5f,0.5f,0.0f,      0.88f,0.77f,0.0f,    1,1,1,  0,0,1 }
+		{-0.5f,-0.5f,0.0f,    -0.32f,-0.11f,0.0f,   1,0,0,  0,1,0 }, 
+		{-0.5f,0.5f,0.0f,     -0.11f,0.78f,0.0f,    1,0,0,  0,1,1 }, 
+		{ 0.5f,-0.5f,0.0f,     0.75f,-0.73f,0.0f,   1,1,0,  1,0,0 },
+		{ -0.1f,-0.1f,0.1f,      0.88f,0.77f,0.0f,    1,1,1,  0,0,1 }
 	};
 
 	m_vb = GraphicsEngine::get()->createVertexBuffer();
@@ -86,13 +89,29 @@ void AppWindow::onUpdate()
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
 	unsigned long new_time = 0;
+
+	constant cc;
+	
+	
+	ticks += EngineTime::getDeltaTime();
+	
+	//cout << ticks << endl;
 	if (m_old_time)
 		new_time = ::GetTickCount() - m_old_time;
 	m_delta_time = new_time / 1000.0f;
 	m_old_time = ::GetTickCount();
+	
+	if (ticks > 4.0f)
+	{
+		random_increment = (((float)rand() / RAND_MAX) * 2.0f - 1.0f)*2.0f;
+		ticks = 0;
+	}
+	cout << random_increment << endl;
+	
 
-	m_angle += 1.57f * m_delta_time;
-	constant cc;
+
+	m_angle += ( 1.57) * m_delta_time;
+
 	cc.m_angle = m_angle;
 
 	m_cb->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);

@@ -1,2 +1,4 @@
-﻿  VertexBuffer.cpp
+﻿  AppWindow.cpp
+C:\Users\alain\source\repos\DirectX\DirectX\AppWindow.cpp(96,35): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\AppWindow.cpp(113,21): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
   DirectX.vcxproj -> C:\Users\alain\source\repos\DirectX\x64\Debug\DirectX.exe
