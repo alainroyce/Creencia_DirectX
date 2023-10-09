@@ -37,6 +37,18 @@
     <Filter Include="GameEngine\GraphicsEngine\EngineTime">
       <UniqueIdentifier>{6b2cdf25-c06f-45ad-99d7-add8a09be234}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\IndexBuffer">
+      <UniqueIdentifier>{04f8a808-cf35-4c39-bb34-42b47bfd4b1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\Math">
+      <UniqueIdentifier>{3bb72e62-d0f5-46a7-941e-355fabfcf1a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\GameObject">
+      <UniqueIdentifier>{c77ca60c-3f9b-44d2-bcaf-48ef21198939}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\Cube">
+      <UniqueIdentifier>{d05f1a0a-7b03-43ae-8448-50d7f51b6fc1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -75,6 +87,15 @@
     <ClCompile Include="EngineTime.cpp">
       <Filter>GameEngine\GraphicsEngine\EngineTime</Filter>
     </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>GameEngine\GraphicsEngine\IndexBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>GameEngine\GraphicsEngine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>GameEngine\GraphicsEngine\Cube</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppWindow.h">
@@ -109,6 +130,21 @@
     </ClInclude>
     <ClInclude Include="EngineTime.h">
       <Filter>GameEngine\GraphicsEngine\EngineTime</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>GameEngine\GraphicsEngine\IndexBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>GameEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4x4.h">
+      <Filter>GameEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GameEngine\GraphicsEngine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>GameEngine\GraphicsEngine\Cube</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

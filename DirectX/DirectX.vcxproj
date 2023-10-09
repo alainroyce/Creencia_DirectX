@@ -133,9 +133,12 @@
   <ItemGroup>
     <ClCompile Include="AppWindow.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DeviceContext.cpp" />
     <ClCompile Include="EngineTime.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GraphicsEngine.cpp" />
+    <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="QuadRenderer.cpp" />
@@ -147,12 +150,17 @@
   <ItemGroup>
     <ClInclude Include="AppWindow.h" />
     <ClInclude Include="ConstantBuffer.h" />
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="DeviceContext.h" />
     <ClInclude Include="EngineTime.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GraphicsEngine.h" />
+    <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="QuadRenderer.h" />
     <ClInclude Include="SwapChain.h" />
+    <ClInclude Include="Vector3D.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexShader.h" />
     <ClInclude Include="Window.h" />
