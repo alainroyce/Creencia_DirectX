@@ -2,7 +2,9 @@
 #include "GraphicsEngine.h"
 #include "SwapChain.h"
 #include "AppWindow.h"
+#include<iostream>
 
+using namespace std;
 
 
 __declspec(align(16))
@@ -23,6 +25,7 @@ struct vertex
 
 Cube::Cube() :GameObject(name)
 {
+	// list of all the vertex in the 3D Cube
 	vertex vertex_list[] =
 	{
 		//X - Y - Z
@@ -43,7 +46,8 @@ Cube::Cube() :GameObject(name)
 	m_vb = GraphicsEngine::get()->createVertexBuffer();
 	UINT size_list = ARRAYSIZE(vertex_list);
 
-
+	// list of all the triangle index with their vertex compositions
+	// this index list should reflect the vertex list
 	unsigned int index_list[] =
 	{
 		//FRONT SIDE
@@ -69,19 +73,25 @@ Cube::Cube() :GameObject(name)
 
 	m_ib = GraphicsEngine::get()->createIndexBuffer();
 	UINT size_index_list = ARRAYSIZE(index_list);
-
+	// set the index list
 	m_ib->load(index_list, size_index_list);
 
 
-	
-	GraphicsEngine::get()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 
+
+	// gets the byte code and size of the vertex shader
+	void* shader_byte_code = nullptr;
+	size_t size_shader = 0;
+	// access the VertexShader.hlsl and compile
+	GraphicsEngine::get()->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
+	// after a successful compiling, create the vertex buffer then
 	m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
+	// drawing  object
 	m_vb->load(vertex_list, sizeof(vertex), size_list, shader_byte_code, size_shader);
 
 	GraphicsEngine::get()->releaseCompiledShader();
-	
 
+	// access the PixelShader.hlsl and compile
 	GraphicsEngine::get()->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
 	m_ps = GraphicsEngine::get()->createPixelShader(shader_byte_code, size_shader);
 	GraphicsEngine::get()->releaseCompiledShader();
@@ -92,6 +102,7 @@ Cube::Cube() :GameObject(name)
 	m_cb = GraphicsEngine::get()->createConstantBuffer();
 	m_cb->load(&cc, sizeof(constant));
 
+
 }
 
 Cube::~Cube()
@@ -100,33 +111,85 @@ Cube::~Cube()
 
 void Cube::update() 
 {
-	m_rotation.m_y += 0.01f * animSpeed;
-
 	constant cc;
-	cc.m_time = EngineTime::getDeltaTime();
 
-	cc.m_world.setScale(m_scale);
-	cc.m_world.setTranslation(m_position);
+	Matrix4x4 allMatrix; allMatrix.setIdentity();
+	Matrix4x4 translationMatrix; translationMatrix.setTranslation(this->GetLocalPosition());
+	Matrix4x4 scaleMatrix; scaleMatrix.setScale(this->GetLocalScale());
+	Matrix4x4 rotationMatrix;
+	//Vector3D rotation = this->getLocalRotation();
+	//Matrix4x4 zMatrix; zMatrix.setRotationZ(rotation.m_z);
+	//Matrix4x4 xMatrix; xMatrix.setRotationX(rotation.m_x);
+	//Matrix4x4 yMatrix; yMatrix.setRotationY(rotation.m_y);
+	//// Combine x-y-z rotation matrices into one.
+	//Matrix4x4 rotMatrix; rotMatrix.setIdentity();
+	//rotMatrix *= xMatrix;
+	//rotMatrix *= yMatrix;
+	//rotMatrix *= zMatrix;
+	//Scale --> Rotate --> Translate as recommended order.
+	allMatrix *= scaleMatrix;
+	//allMatrix *= rotMatrix;
+
+	this->deltaScale += EngineTime::getDeltaTime() * this->speed * animSpeed;
+
+	//cc.m_world.setScale(m_scale);
+	//cc.m_world.setTranslation(m_position);
+
+	rotationMatrix.setIdentity();
+	rotationMatrix.setRotationZ(this->deltaScale);
+	allMatrix *= rotationMatrix;
+
+	rotationMatrix.setIdentity();
+	rotationMatrix.setRotationY(this->deltaScale);
+	allMatrix *= rotationMatrix;
+
+	rotationMatrix.setIdentity();
+	rotationMatrix.setRotationX(this->deltaScale);
+	allMatrix *= rotationMatrix;
+
+	allMatrix *= translationMatrix;
+
+	cc.m_world = allMatrix;
+
+
 
 	Matrix4x4 temp;
+
+	Matrix4x4 world_cam;
+	world_cam.setIdentity();
+
 	temp.setIdentity();
-	temp.setRotationY(m_rotation.m_y);
-	cc.m_world *= temp;
+	temp.setRotationX(m_rot_x);
+	world_cam *= temp;
+
+	temp.setIdentity();
+	temp.setRotationY(m_rot_y);
+	world_cam *= temp;
+
+
+	Vector3D new_pos = m_world_cam.getTranslation() + world_cam.getZDirection() * (m_forward * 0.1f);
+	new_pos = new_pos + world_cam.getXDirection() * (m_rightward * 0.1f);
+	world_cam.setTranslation(new_pos);
+	m_world_cam = world_cam;
+	world_cam.inverse();
 	
-	Window window;
+	cc.m_view = world_cam;
 
+	float height = 3;
+	float width = 2;
 
-	cc.m_view.setIdentity();
 	cc.m_proj.setOrthoLH
 	(
-		(1004) / 300.0f,
-		(725) / 300.0f,
+		width,
+		height,
 		-4.0f,
 		4.0f
 	);
-
+	//cc.m_proj.setPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.001f, 100.0f);
 
 	m_cb->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
+	
+	
 }
 void Cube::draw()
 {

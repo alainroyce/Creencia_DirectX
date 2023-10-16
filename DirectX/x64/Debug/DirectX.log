@@ -1,14 +1,22 @@
 ﻿  AppWindow.cpp
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(38,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(39,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(40,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(40,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(41,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(46,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(47,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(42,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(43,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(48,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(49,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(54,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(55,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(56,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(49,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(50,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(51,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(56,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(57,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(58,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(59,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(103,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(105,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(106,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(148,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\AppWindow.cpp(99,45): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\alain\source\repos\DirectX\DirectX\AppWindow.cpp(104,45): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\alain\source\repos\DirectX\DirectX\AppWindow.cpp(109,46): warning C4305: 'argument': truncation from 'double' to 'float'
   DirectX.vcxproj -> C:\Users\alain\source\repos\DirectX\x64\Debug\DirectX.exe
