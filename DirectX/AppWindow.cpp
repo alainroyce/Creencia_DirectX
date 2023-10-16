@@ -30,7 +30,25 @@ AppWindow::AppWindow()
 // updating our constant buffer
 void AppWindow::update()
 {
+	m_world_cam.setIdentity();
+	Matrix4x4 rotX;
+	rotX.setIdentity();
+	rotX.setRotationX(CameraRot.m_x);
+	m_world_cam *= rotX;
 
+	Matrix4x4 rotY;
+	rotY.setIdentity();
+	rotY.setRotationY(CameraRot.m_y);
+	m_world_cam *= rotY;
+
+	CameraPos = CameraPos + m_world_cam.getZDirection() * (m_forward * 0.1f);
+	CameraPos = CameraPos + m_world_cam.getXDirection() * (m_rightward * 0.1f);
+
+
+	m_world_cam.setTranslation(CameraPos);
+
+
+	m_world_cam.inverse();
 }
 
 
@@ -122,6 +140,10 @@ void AppWindow::onCreate()
 	CubeList.push_back(cube10);
 	
 
+	m_world_cam.setIdentity();
+	CameraPos.m_x = 0;
+	CameraPos.m_y = 0;
+	CameraPos.m_z = -1;
 
 }
 
@@ -142,12 +164,12 @@ void AppWindow::onUpdate()
 	
 
 
-	//update();
+	update();
 
 	for (Cube* cube : CubeList)
 	{
 		cube->draw();
-		cube->update();
+		cube->update(m_world_cam);
 
 	}
 	
@@ -191,7 +213,7 @@ void AppWindow::onKeyDown(int key)
 	{
 		for (Cube* cube : CubeList)
 		{
-			cube->SetAnimSpeed(1.0f);
+			cube->SetAnimSpeed(5.0f);
 
 		}
 		cout << "W Pressed" << endl;
@@ -201,7 +223,7 @@ void AppWindow::onKeyDown(int key)
 	{
 		for (Cube* cube : CubeList)
 		{
-			cube->SetAnimSpeed(-1.0f);
+			cube->SetAnimSpeed(-5.0f);
 
 		}
 		cout << "S Pressed" << endl;
@@ -247,9 +269,10 @@ void AppWindow::onMouseMove(const Point& mouse_pos)
 	int width = (this->getClientWindowRect().right - this->getClientWindowRect().left);
 	int height = (this->getClientWindowRect().bottom - this->getClientWindowRect().top);
 
-	m_rot_x += (mouse_pos.m_y - (height / 2.0f)) * m_delta_time * 0.1f;
-	m_rot_y += (mouse_pos.m_x - (width / 2.0f)) * m_delta_time * 0.1f;
+	CameraRot.m_x += mouse_pos.m_y * m_delta_time * 0.1f;
+	CameraRot.m_y += mouse_pos.m_x * m_delta_time * 0.1f;
 
+	cout << CameraRot.m_x << " : " << CameraRot.m_y << " : " << CameraRot.m_z << endl;
 	//InputSystem::get()->setCursorPosition(Point((int)(width / 2.0f), (int)(height / 2.0f)));
 }
 

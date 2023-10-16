@@ -19,7 +19,7 @@ class Cube : public GameObject
 public:
 	Cube();
 	~Cube();
-	void update();
+	void update(Matrix4x4 cam);
 	void draw();
 	void SetAnimSpeed(float speed);
 

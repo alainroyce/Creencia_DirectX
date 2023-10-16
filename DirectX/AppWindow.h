@@ -63,4 +63,7 @@ private:
 	float m_rightward = 0.0f;
 	Matrix4x4 m_world_cam;
 	vector <Cube*> CubeList;
+
+	Vector3D CameraPos;
+	Vector3D CameraRot;
 };

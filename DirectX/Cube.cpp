@@ -109,7 +109,7 @@ Cube::~Cube()
 {
 }
 
-void Cube::update() 
+void Cube::update(Matrix4x4 cam) 
 {
 	constant cc;
 
@@ -152,40 +152,20 @@ void Cube::update()
 	cc.m_world = allMatrix;
 
 
-
-	Matrix4x4 temp;
-
-	Matrix4x4 world_cam;
-	world_cam.setIdentity();
-
-	temp.setIdentity();
-	temp.setRotationX(m_rot_x);
-	world_cam *= temp;
-
-	temp.setIdentity();
-	temp.setRotationY(m_rot_y);
-	world_cam *= temp;
-
-
-	Vector3D new_pos = m_world_cam.getTranslation() + world_cam.getZDirection() * (m_forward * 0.1f);
-	new_pos = new_pos + world_cam.getXDirection() * (m_rightward * 0.1f);
-	world_cam.setTranslation(new_pos);
-	m_world_cam = world_cam;
-	world_cam.inverse();
 	
-	cc.m_view = world_cam;
+	cc.m_view = cam;
 
 	float height = 3;
 	float width = 2;
-
-	cc.m_proj.setOrthoLH
+	
+	/*cc.m_proj.setOrthoLH
 	(
 		width,
 		height,
 		-4.0f,
 		4.0f
-	);
-	//cc.m_proj.setPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.001f, 100.0f);
+	);*/
+	cc.m_proj.setPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.001f, 100.0f);
 
 	m_cb->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
 	
