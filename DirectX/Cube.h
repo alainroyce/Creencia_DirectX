@@ -22,7 +22,7 @@ public:
 	void update(Matrix4x4 cam);
 	void draw();
 	void SetAnimSpeed(float speed);
-
+	Vector3D LerpColor(float minValue, float maxValue, float yMin, float yMax, const Vector3D& startColor, const Vector3D& endColor);
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 private:

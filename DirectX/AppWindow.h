@@ -26,16 +26,20 @@ public:
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
-	virtual void onFocus() override;
-	virtual void onKillFocus() override;
+	
 
-	void onKeyDown(int key) override;
-	void onKeyUp(int key) override;
-	void onMouseMove(const Point& mouse_pos) override;
-	void onLeftMouseDown(const Point& delta_mouse_pos) override;
-	void onLeftMouseUp(const Point& delta_mouse_pos)  override;
-	void onRightMouseDown(const Point& delta_mouse_pos) override;
-	void onRightMouseUp(const Point& delta_mouse_pos) override;
+	virtual void onKeyDown(int key) override;
+	virtual void onKeyUp(int key) override;
+
+	virtual void onMouseMove(const Point deltaPos);
+
+	virtual void onLeftMouseDown(const Point deltaPos);
+	virtual void onLeftMouseUp(const Point deltaPos);
+
+	virtual void onRightMouseDown(const Point deltaPos);
+	virtual void onRightMouseUp(const Point deltaPos);
+
+	
 
 private:
 	SwapChain* m_swap_chain;
@@ -66,4 +70,7 @@ private:
 
 	Vector3D CameraPos;
 	Vector3D CameraRot;
+	float animationTime = 0.0f;
+	bool increasingScale = true;
+
 };

@@ -30,16 +30,16 @@ Cube::Cube() :GameObject(name)
 	{
 		//X - Y - Z
 		//FRONT FACE
-		{Vector3D(-0.5f,-0.5f,-0.5f),    Vector3D(1,0,0),  Vector3D(0.2f,0,0) },
-		{Vector3D(-0.5f,0.5f,-0.5f),    Vector3D(1,1,0), Vector3D(0.2f,0.2f,0) },
-		{ Vector3D(0.5f,0.5f,-0.5f),   Vector3D(1,1,0),  Vector3D(0.2f,0.2f,0) },
-		{ Vector3D(0.5f,-0.5f,-0.5f),     Vector3D(1,0,0), Vector3D(0.2f,0,0) },
+		{Vector3D(-0.5f,-0.5f,-0.5f),    Vector3D(1,1,1),  Vector3D(1,1,1)},
+		{Vector3D(-0.5f,0.5f,-0.5f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(0.5f,0.5f,-0.5f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(0.5f,-0.5f,-0.5f),     Vector3D(1,1,1), Vector3D(1,1,1) },
 
 		//BACK FACE
-		{ Vector3D(0.5f,-0.5f,0.5f),    Vector3D(0,1,0), Vector3D(0,0.2f,0) },
-		{ Vector3D(0.5f,0.5f,0.5f),    Vector3D(0,1,1), Vector3D(0,0.2f,0.2f) },
-		{ Vector3D(-0.5f,0.5f,0.5f),   Vector3D(0,1,1),  Vector3D(0,0.2f,0.2f) },
-		{ Vector3D(-0.5f,-0.5f,0.5f),     Vector3D(0,1,0), Vector3D(0,0.2f,0) }
+		{ Vector3D(0.5f,-0.5f,0.5f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(0.5f,0.5f,0.5f),    Vector3D(1,1,1), Vector3D(1,1,1) },
+		{ Vector3D(-0.5f,0.5f,0.5f),   Vector3D(1,1,1),  Vector3D(1,1,1) },
+		{ Vector3D(-0.5f,-0.5f,0.5f),     Vector3D(1,1,1), Vector3D(1,1,1) }
 
 	};
 
@@ -87,6 +87,8 @@ Cube::Cube() :GameObject(name)
 	// after a successful compiling, create the vertex buffer then
 	m_vs = GraphicsEngine::get()->createVertexShader(shader_byte_code, size_shader);
 	// drawing  object
+
+	m_vb = GraphicsEngine::get()->createVertexBuffer();
 	m_vb->load(vertex_list, sizeof(vertex), size_list, shader_byte_code, size_shader);
 
 	GraphicsEngine::get()->releaseCompiledShader();
@@ -112,63 +114,32 @@ Cube::~Cube()
 void Cube::update(Matrix4x4 cam) 
 {
 	constant cc;
+	//cc.m_time = GetTickCount();
+	cc.m_time = EngineTime::getDeltaTime();
+	cc.m_world.setIdentity();
+	cc.m_world.setScale(this->GetLocalScale());
 
-	Matrix4x4 allMatrix; allMatrix.setIdentity();
-	Matrix4x4 translationMatrix; translationMatrix.setTranslation(this->GetLocalPosition());
-	Matrix4x4 scaleMatrix; scaleMatrix.setScale(this->GetLocalScale());
-	Matrix4x4 rotationMatrix;
-	//Vector3D rotation = this->getLocalRotation();
-	//Matrix4x4 zMatrix; zMatrix.setRotationZ(rotation.m_z);
-	//Matrix4x4 xMatrix; xMatrix.setRotationX(rotation.m_x);
-	//Matrix4x4 yMatrix; yMatrix.setRotationY(rotation.m_y);
-	//// Combine x-y-z rotation matrices into one.
-	//Matrix4x4 rotMatrix; rotMatrix.setIdentity();
-	//rotMatrix *= xMatrix;
-	//rotMatrix *= yMatrix;
-	//rotMatrix *= zMatrix;
-	//Scale --> Rotate --> Translate as recommended order.
-	allMatrix *= scaleMatrix;
-	//allMatrix *= rotMatrix;
+	m_rotation.m_y += animSpeed * 0.01f;
+	m_rotation.m_x += animSpeed* 0.01f;
+	m_rotation.m_z += animSpeed * 0.01f;
+	Matrix4x4 rotY;
+	rotY.setIdentity();
+	rotY.setRotationY(m_rotation.m_y);
+	cc.m_world *= rotY;
 
-	this->deltaScale += EngineTime::getDeltaTime() * this->speed * animSpeed;
+	Matrix4x4 rotX;
+	rotX.setIdentity();
+	rotX.setRotationX(m_rotation.m_x);
+	cc.m_world *= rotX;
 
-	//cc.m_world.setScale(m_scale);
-	//cc.m_world.setTranslation(m_position);
+	cc.m_world.setTranslation(this->GetLocalPosition());
 
-	rotationMatrix.setIdentity();
-	rotationMatrix.setRotationZ(this->deltaScale);
-	allMatrix *= rotationMatrix;
-
-	rotationMatrix.setIdentity();
-	rotationMatrix.setRotationY(this->deltaScale);
-	allMatrix *= rotationMatrix;
-
-	rotationMatrix.setIdentity();
-	rotationMatrix.setRotationX(this->deltaScale);
-	allMatrix *= rotationMatrix;
-
-	allMatrix *= translationMatrix;
-
-	cc.m_world = allMatrix;
-
-
-	
 	cc.m_view = cam;
 
-	float height = 3;
-	float width = 2;
-	
-	/*cc.m_proj.setOrthoLH
-	(
-		width,
-		height,
-		-4.0f,
-		4.0f
-	);*/
-	cc.m_proj.setPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.001f, 100.0f);
+	cc.m_proj.setPerspectiveFovLH(1.57f, ((float)400 / (float)400), 0.1f, 100.0f);
+
 
 	m_cb->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
-	
 	
 }
 void Cube::draw()

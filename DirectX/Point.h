@@ -1,25 +1,16 @@
 #pragma once
-
 class Point
 {
 public:
-	Point() : m_x(0), m_y(0)
-	{
+	Point();
+	Point(int x, int y);
+	Point(const Point* point);
+	~Point();
 
-	}
-	Point(int x, int y) : m_x(x), m_y(y)
-	{
+	int getX() const;
+	int getY() const;
 
-	}
-	Point(const Point& point) : m_x(point.m_x), m_y(point.m_y)
-	{
-
-	}
-	~Point()
-	{
-
-	}
-
-public:
-	int m_x, m_y;
+private:
+	int x = 0;
+	int y = 0;
 };

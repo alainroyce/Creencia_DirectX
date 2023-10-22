@@ -1,20 +1,19 @@
-﻿  Cube.cpp
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(40,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(41,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(42,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(43,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(48,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(49,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(50,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(51,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(56,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(57,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(58,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(59,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(103,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(104,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(105,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(106,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(148,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alain\source\repos\DirectX\DirectX\Cube.cpp(133,63): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+﻿  AppWindow.cpp
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(41,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(42,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(43,23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(44,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(49,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(50,23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(51,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(52,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(57,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(58,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(59,23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(60,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(114,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(148,53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(149,53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(150,53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(151,53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   DirectX.vcxproj -> C:\Users\alain\source\repos\DirectX\x64\Debug\DirectX.exe

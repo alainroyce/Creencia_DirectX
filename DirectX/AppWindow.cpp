@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include "Vector3D.h"
 #include "Matrix4x4.h"
+#include <cmath>
 #include "InputSystem.h"
 
 struct vertex
@@ -27,9 +28,14 @@ AppWindow::AppWindow()
 {
 }
 
+
+
 // updating our constant buffer
 void AppWindow::update()
 {
+
+	
+
 	m_world_cam.setIdentity();
 	Matrix4x4 rotX;
 	rotX.setIdentity();
@@ -60,10 +66,9 @@ void AppWindow::onCreate()
 {
 	Window::onCreate();
 
-	// subscribe this class to the InputSystem
-	InputSystem::get()->addListener(this);
-	// hides the cursor
-	InputSystem::get()->showCursor(false);
+
+	InputSystem::initialize();
+	InputSystem::getInstance()->addListener(this);
 
 	GraphicsEngine::get()->init();
 	m_swap_chain = GraphicsEngine::get()->createSwapChain();
@@ -72,31 +77,33 @@ void AppWindow::onCreate()
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
 	m_world_cam.setTranslation(Vector3D(0, 0, -2));
-
+	
 	Cube* cube = new Cube();
-	cube->SetScale(Vector3D(0.5f, 0.5f, 0.5f));
-	cube->SetPosition(Vector3D(0, 0, 0));
-	cube->SetRotation(Vector3D(0, 5.0f, 0));
+	cube->SetScale(Vector3D(1.0f, 1.0f, 1.0f));
+	cube->SetPosition(Vector3D(-1.5f, 1.0f, -3.0f));
+	cube->SetRotation(Vector3D(0, 0, 0));
 	cube->SetAnimSpeed(0.0f);
 
+	CubeList.push_back(cube);
+	
 	Cube* cube2 = new Cube();
-	cube2->SetScale(Vector3D(0.2f, 0.2f, 0.2f));
-	cube2->SetPosition(Vector3D(0, -0.3f, 0));
+	cube2->SetScale(Vector3D(1.0f, 1.0f, 1.0f));
+	cube2->SetPosition(Vector3D(0, 1.0f, 0));
 	cube2->SetAnimSpeed(0.0f);
 
 
 	Cube* cube3 = new Cube();
-	cube3->SetScale(Vector3D(0.1f, 0.1f, 0.1f));
-	cube3->SetPosition(Vector3D(0, 0.3f, 0));
+	cube3->SetScale(Vector3D(1.0f, 1.0f, 1.0f));
+	cube3->SetPosition(Vector3D(2.6f, 1.0f, 2.0));
 	cube3->SetAnimSpeed(0.0f);
 
 
 	Cube* cube4 = new Cube();
-	cube4->SetScale(Vector3D(0.3f, 0.3f, 0.3f));
-	cube4->SetPosition(Vector3D(0.3f, 0.3f, 0));
+	cube4->SetScale(Vector3D(5.0f, 0.05f, 5.0f));
+	cube4->SetPosition(Vector3D(0, -0.5f, 0));
 	cube4->SetAnimSpeed(0.0f);
 
-
+	/*
 	Cube* cube5 = new Cube();
 	cube5->SetScale(Vector3D(0.2f, 0.2f, 0.2f));
 	cube5->SetPosition(Vector3D(-0.3f, -0.3f, 0));
@@ -126,12 +133,15 @@ void AppWindow::onCreate()
 	cube10->SetScale(Vector3D(0.2f, 0.2f, 0.2f));
 	cube10->SetPosition(Vector3D(0.8f, 0.2f, 0.2));
 	cube10->SetAnimSpeed(0.0f);
+	*/
 
-
-	CubeList.push_back(cube);
+	
+	
+	
 	CubeList.push_back(cube2);
 	CubeList.push_back(cube3);
 	CubeList.push_back(cube4);
+	/*
 	CubeList.push_back(cube5);
 	CubeList.push_back(cube6);
 	CubeList.push_back(cube7);
@@ -139,11 +149,28 @@ void AppWindow::onCreate()
 	CubeList.push_back(cube9);
 	CubeList.push_back(cube10);
 	
+	*/
 
-	m_world_cam.setIdentity();
-	CameraPos.m_x = 0;
-	CameraPos.m_y = 0;
-	CameraPos.m_z = -1;
+	/*
+	std::srand(static_cast<unsigned>(std::time(nullptr)));
+
+	// Create and add 50 cubes to the CubeList
+	for (int i = 0; i < 50; i++) {
+		Cube* cube = new Cube();
+
+		// Randomly set the position within the range [-0.5, 0.5] for x, y, and z axes
+		float randomX = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) - 0.5f;
+		float randomY = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) - 0.5f;
+		float randomZ = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) - 0.5f;
+
+		cube->SetScale(Vector3D(0.2f, 0.2f, 0.2f)); // You can adjust the scale as needed.
+		cube->SetPosition(Vector3D(randomX, randomY, randomZ));
+		cube->SetAnimSpeed(0.0f);
+
+		CubeList.push_back(cube);
+	}*/
+
+
 
 }
 
@@ -151,8 +178,66 @@ void AppWindow::onUpdate()
 {
 	Window::onUpdate();
 
+	/*
+	// Update the animation time
+	animationTime += m_delta_time;
+
+
+	
+	// Define animation parameters
+	float animationDuration = 4.0f;  // Time for one full cycle (1.0 to 0.25 to 1.0)
+
+	// Calculate t based on a sine wave within the range [0, 1]
+	const float pi = 3.14;
+	float t = (1.0f + sin(animationTime * 2 * pi / animationDuration)) / 2.0f;
+
+	
+	Vector3D scale = Vector3D::lerp(Vector3D(1.0f, 1.0f, 1.0f), Vector3D(0.25f, 0.25f, 0.25f), t);
+
+	float posX = sin(animationTime * 2 * pi / animationDuration);
+	float posY = cos(animationTime * 2 * pi / animationDuration);
+	Vector3D position(posX, posY, 0.0f);
+
+	for (Cube* cube : CubeList) {
+		cube->SetScale(scale);
+		cube->SetPosition(position);
+	}
+	*/
+
+	/*
+	// Update the animation time
+	animationTime += m_delta_time;
+
+
+	float animationDuration = 5.0f;  
+
+
+	const float pi = 3.14;
+	float t = (1.0f + sin(animationTime * 2 * pi / animationDuration)) / 2.0f;
+	Vector3D scale;
+	Vector3D position;
+	Vector3D rotation;
+
+	
+	if (t <= 0.5f) {
+		scale = Vector3D::lerp(Vector3D(1.0f, 1.0f, 1.0f), Vector3D(4.0f, 0.05f, 4.0f), t * 2);
+		position = Vector3D(0.0f, 0.0f, 0.0f);  
+		rotation = Vector3D(0.0f, 0.0f, 0.0f);  
+	}
+	else {
+		scale = Vector3D::lerp(Vector3D(4.0f, 0.05f, 4.0f), Vector3D(1.0f, 1.0f, 1.0f), (t - 0.5f) * 2);
+		position = Vector3D(0.0f, 0.0f, 0.0f);  
+		rotation = Vector3D(0.0f, 0.0f, 0.0f);  
+	}
+
+	for (Cube* cube : CubeList) {
+		cube->SetScale(scale);
+		cube->SetPosition(position);
+		cube->SetRotation(rotation);
+	}
+	*/
 	// run the update for the InputSystem
-	InputSystem::get()->update();
+	InputSystem::getInstance()->update();
 
 	//CLEAR THE RENDER TARGET 
 	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,
@@ -168,9 +253,8 @@ void AppWindow::onUpdate()
 
 	for (Cube* cube : CubeList)
 	{
-		cube->draw();
 		cube->update(m_world_cam);
-
+		cube->draw();
 	}
 	
 	
@@ -195,38 +279,23 @@ void AppWindow::onDestroy()
 	GraphicsEngine::get()->release();
 }
 
-void AppWindow::onFocus()
-{
-	// subscribe this class to the InputSystem
-	InputSystem::get()->addListener(this);
-}
-
-void AppWindow::onKillFocus()
-{
-	InputSystem::get()->removeListener(this);
-}
-
-// InputListener virtual method definitions
 void AppWindow::onKeyDown(int key)
 {
+	cout << "onkeydown:\n";
 	if (key == 'W')
 	{
 		for (Cube* cube : CubeList)
 		{
-			cube->SetAnimSpeed(5.0f);
-
+			//cube->SetAnimSpeed(5.0f);
 		}
-		cout << "W Pressed" << endl;
 		m_forward = 1.0f;
 	}
 	else if (key == 'S')
 	{
 		for (Cube* cube : CubeList)
 		{
-			cube->SetAnimSpeed(-5.0f);
-
+			//cube->SetAnimSpeed(-5.0f);
 		}
-		cout << "S Pressed" << endl;
 		m_forward = -1.0f;
 	}
 	else if (key == 'A')
@@ -235,63 +304,47 @@ void AppWindow::onKeyDown(int key)
 	}
 	else if (key == 'D')
 	{
-	
 		m_rightward = 1.0f;
 	}
 }
 
 void AppWindow::onKeyUp(int key)
 {
-	if (key == 'W')
+	for (Cube* cube : CubeList)
 	{
-		for (Cube* cube : CubeList)
-		{
-			cube->SetAnimSpeed(0.0f);
-
-		}
+		cube->SetAnimSpeed(0.0f);
 	}
-	if (key == 'S')
-	{
-		for (Cube* cube : CubeList)
-		{
-			cube->SetAnimSpeed(0.0f);
-
-		}
-	}
-	// stops the camera
 	m_forward = 0.0f;
 	m_rightward = 0.0f;
 }
 
-void AppWindow::onMouseMove(const Point& mouse_pos)
+void AppWindow::onMouseMove(const Point deltaPos)
 {
-	// width and height of the screen
 	int width = (this->getClientWindowRect().right - this->getClientWindowRect().left);
 	int height = (this->getClientWindowRect().bottom - this->getClientWindowRect().top);
+	CameraRot.m_x+= deltaPos.getY() * 0.1f * m_delta_time;
+	CameraRot.m_y += deltaPos.getX() * 0.1f * m_delta_time;
 
-	CameraRot.m_x += mouse_pos.m_y * m_delta_time * 0.1f;
-	CameraRot.m_y += mouse_pos.m_x * m_delta_time * 0.1f;
-
-	cout << CameraRot.m_x << " : " << CameraRot.m_y << " : " << CameraRot.m_z << endl;
-	//InputSystem::get()->setCursorPosition(Point((int)(width / 2.0f), (int)(height / 2.0f)));
+	cout << CameraRot.m_x << " : " << CameraRot.m_y << endl;
 }
 
-void AppWindow::onLeftMouseDown(const Point& delta_mouse_pos)
+void AppWindow::onLeftMouseDown(const Point deltaPos)
 {
-	
 }
 
-void AppWindow::onLeftMouseUp(const Point& delta_mouse_pos)
+void AppWindow::onLeftMouseUp(const Point deltaPos)
 {
-	
 }
 
-void AppWindow::onRightMouseDown(const Point& delta_mouse_pos)
+void AppWindow::onRightMouseDown(const Point deltaPos)
 {
-	
 }
 
-void AppWindow::onRightMouseUp(const Point& delta_mouse_pos)
+void AppWindow::onRightMouseUp(const Point deltaPos)
 {
-	
 }
+
+
+
+
+
