@@ -26,6 +26,8 @@ public:
 	ConstantBuffer* createConstantBuffer();
 	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size);
 	PixelShader* createPixelShader(const void* shader_byte_code, size_t byte_code_size);
+	ID3D11Device* getDevice();
+	ID3D11DeviceContext* getD3D11DeviceContext();
 public:
 	bool compileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
 	bool compilePixelShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);

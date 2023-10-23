@@ -11,7 +11,7 @@
 #include "PixelShader.h"
 #include "Cube.h"
 #include "InputListener.h"
-
+#include"imgui.h"
 using namespace std;
 class AppWindow : public Window, public InputListener
 {
@@ -72,5 +72,12 @@ private:
 	Vector3D CameraRot;
 	float animationTime = 0.0f;
 	bool increasingScale = true;
+
+	
+	
+	bool isAnim = false;
+	bool show_demo_window = true;
+	bool show_another_window = false;
+	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 };

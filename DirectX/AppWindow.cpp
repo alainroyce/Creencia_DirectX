@@ -4,6 +4,10 @@
 #include "Matrix4x4.h"
 #include <cmath>
 #include "InputSystem.h"
+#include "imgui.h"
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
+
 
 struct vertex
 {
@@ -78,6 +82,7 @@ void AppWindow::onCreate()
 
 	m_world_cam.setTranslation(Vector3D(0, 0, -2));
 	
+	/*
 	Cube* cube = new Cube();
 	cube->SetScale(Vector3D(1.0f, 1.0f, 1.0f));
 	cube->SetPosition(Vector3D(-1.5f, 1.0f, -3.0f));
@@ -103,7 +108,7 @@ void AppWindow::onCreate()
 	cube4->SetPosition(Vector3D(0, -0.5f, 0));
 	cube4->SetAnimSpeed(0.0f);
 
-	/*
+	
 	Cube* cube5 = new Cube();
 	cube5->SetScale(Vector3D(0.2f, 0.2f, 0.2f));
 	cube5->SetPosition(Vector3D(-0.3f, -0.3f, 0));
@@ -133,7 +138,7 @@ void AppWindow::onCreate()
 	cube10->SetScale(Vector3D(0.2f, 0.2f, 0.2f));
 	cube10->SetPosition(Vector3D(0.8f, 0.2f, 0.2));
 	cube10->SetAnimSpeed(0.0f);
-	*/
+	
 
 	
 	
@@ -141,7 +146,7 @@ void AppWindow::onCreate()
 	CubeList.push_back(cube2);
 	CubeList.push_back(cube3);
 	CubeList.push_back(cube4);
-	/*
+	
 	CubeList.push_back(cube5);
 	CubeList.push_back(cube6);
 	CubeList.push_back(cube7);
@@ -151,7 +156,7 @@ void AppWindow::onCreate()
 	
 	*/
 
-	/*
+	
 	std::srand(static_cast<unsigned>(std::time(nullptr)));
 
 	// Create and add 50 cubes to the CubeList
@@ -168,8 +173,19 @@ void AppWindow::onCreate()
 		cube->SetAnimSpeed(0.0f);
 
 		CubeList.push_back(cube);
-	}*/
+	}
 
+	//IMGUI
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
+
+	// Setup Platform/Renderer backends
+	ImGui_ImplWin32_Init(this->m_hwnd);
+	ImGui_ImplDX11_Init(GraphicsEngine::get()->getDevice(), GraphicsEngine::get()->getD3D11DeviceContext());
 
 
 }
@@ -177,6 +193,9 @@ void AppWindow::onCreate()
 void AppWindow::onUpdate()
 {
 	Window::onUpdate();
+
+	
+
 
 	/*
 	// Update the animation time
@@ -240,8 +259,8 @@ void AppWindow::onUpdate()
 	InputSystem::getInstance()->update();
 
 	//CLEAR THE RENDER TARGET 
-	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain,
-		0, 0.3f, 0.4f, 1);
+	GraphicsEngine::get()->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, clear_color.x, clear_color.y, clear_color.z, 1);
+	
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
@@ -257,6 +276,54 @@ void AppWindow::onUpdate()
 		cube->draw();
 	}
 	
+
+
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+
+	if (show_demo_window)
+	{
+		ImGui::ShowDemoWindow();
+	}
+
+
+	static float f = 0.0f;
+	static int counter = 0;
+
+	ImGuiWindowFlags flag = 64;
+	ImGui::Begin("Scene Settings", 0, flag);
+	ImGui::Checkbox("Demo Window", &show_demo_window);
+
+	ImGui::ColorEdit3("clear color", (float*)&clear_color);
+
+	if (isAnim)
+	{
+		if (ImGui::Button("Pause Animation"))
+		{
+			isAnim = false;
+			for (Cube* cube : CubeList)
+			{
+				cube->SetAnimSpeed(0.0f);
+			}
+		}
+	}
+	else
+	{
+		if (ImGui::Button("Start Animation"))
+		{
+			isAnim = true;
+			for (Cube* cube : CubeList)
+			{
+				cube->SetAnimSpeed(1.0f);
+			}
+		}
+	}
+
+	ImGui::End();
+
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	
 	m_swap_chain->present(true);
 
@@ -269,6 +336,11 @@ void AppWindow::onUpdate()
 
 void AppWindow::onDestroy()
 {
+
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+
 	Window::onDestroy();
 	m_vb->release();
 	m_ib->release();
@@ -312,7 +384,7 @@ void AppWindow::onKeyUp(int key)
 {
 	for (Cube* cube : CubeList)
 	{
-		cube->SetAnimSpeed(0.0f);
+		
 	}
 	m_forward = 0.0f;
 	m_rightward = 0.0f;

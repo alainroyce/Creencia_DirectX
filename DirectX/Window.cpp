@@ -1,5 +1,7 @@
 #include "Window.h"
 #include "EngineTime.h"
+#include "imgui.h"
+
 //Window* window=nullptr;
 
 Window::Window()
@@ -7,10 +9,14 @@ Window::Window()
 
 }
 
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	//GetWindowLong(hwnd,)
+
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
+		return true;
+
 	switch (msg)
 	{
 	case WM_CREATE:
@@ -69,7 +75,7 @@ bool Window::init()
 		window = this;*/
 
 		//Creation of the window
-	m_hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"MyWindowClass", L"DirectX Application",
+	m_hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"MyWindowClass", L"DirectX Application Macuha",
 		WS_CAPTION | WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768,
 		NULL, NULL, NULL, this);
 
@@ -82,13 +88,15 @@ bool Window::init()
 	::UpdateWindow(m_hwnd);
 
 
-	
+
 
 	//set this flag to true to indicate that the window is initialized and running
 	m_is_run = true;
 
 
 	EngineTime::initialize();
+
+
 	return true;
 }
 
@@ -97,17 +105,18 @@ bool Window::broadcast()
 	EngineTime::LogFrameStart();
 	MSG msg;
 
+
 	this->onUpdate();
-	
+
 	while (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) > 0)
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-	
+
 	Sleep(1);
 
-	EngineTime::LogFrameEnd();
+	EngineTime::LogFrameStart();
 	return true;
 }
 
@@ -149,13 +158,6 @@ void Window::onUpdate()
 void Window::onDestroy()
 {
 	m_is_run = false;
-}
-void Window::onFocus()
-{
-}
-
-void Window::onKillFocus()
-{
 }
 
 Window::~Window()
