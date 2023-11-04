@@ -17,10 +17,10 @@ using namespace std;
 class Cube : public GameObject
 {
 public:
-	Cube();
+	Cube(std::string name);
 	~Cube();
-	void update(Matrix4x4 cam);
-	void draw();
+	void update(Matrix4x4 cam)override;
+	void draw()override;
 	void SetAnimSpeed(float speed);
 	Vector3D LerpColor(float minValue, float maxValue, float yMin, float yMax, const Vector3D& startColor, const Vector3D& endColor);
 	void* shader_byte_code = nullptr;

@@ -29,6 +29,10 @@ public:
 	void SetRotation(Vector3D rot);
 	Vector3D GetLocalRotation();
 
+	virtual void update(Matrix4x4 cam);
+	virtual void draw();
+	std::string GetName();
+
 protected:
 	std::string name;
 	Vector3D m_position;

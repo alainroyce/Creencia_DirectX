@@ -11,6 +11,7 @@
 #include "PixelShader.h"
 #include "Cube.h"
 #include "InputListener.h"
+#include "GameObjectManager.h"
 #include"imgui.h"
 using namespace std;
 class AppWindow : public Window, public InputListener
@@ -42,12 +43,14 @@ public:
 	
 
 private:
+
 	SwapChain* m_swap_chain;
 	VertexBuffer* m_vb;
 	VertexShader* m_vs;
 	PixelShader* m_ps;
 	ConstantBuffer* m_cb;
 	IndexBuffer* m_ib;
+
 private:
 	long m_old_delta;
 	long m_new_delta;
@@ -79,5 +82,7 @@ private:
 	bool show_demo_window = true;
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+	bool ToolBarIsActive = true;
 
 };

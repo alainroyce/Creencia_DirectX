@@ -23,7 +23,7 @@ struct vertex
 };
 
 
-Cube::Cube() :GameObject(name)
+Cube::Cube(std::string name) :GameObject(name)
 {
 	// list of all the vertex in the 3D Cube
 	vertex vertex_list[] =
@@ -119,9 +119,9 @@ void Cube::update(Matrix4x4 cam)
 	cc.m_world.setIdentity();
 	cc.m_world.setScale(this->GetLocalScale());
 
-	m_rotation.m_y += animSpeed * 0.01f;
-	m_rotation.m_x += animSpeed* 0.01f;
-	m_rotation.m_z += animSpeed * 0.01f;
+	//m_rotation.m_y += animSpeed * 0.01f;
+	//m_rotation.m_x += animSpeed* 0.01f;
+	//m_rotation.m_z += animSpeed * 0.01f;
 	Matrix4x4 rotY;
 	rotY.setIdentity();
 	rotY.setRotationY(m_rotation.m_y);

@@ -58,6 +58,9 @@
     <Filter Include="IMGUI">
       <UniqueIdentifier>{26581fa0-a6b2-425d-98cb-633dddd3d1cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\UI">
+      <UniqueIdentifier>{f785ec19-1346-4b67-ac77-33ee10b3f433}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -131,6 +134,27 @@
     </ClCompile>
     <ClCompile Include="..\imgui\imgui.cpp">
       <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>GameEngine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>GameEngine\GraphicsEngine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="UIToolbar.cpp">
+      <Filter>GameEngine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIScreen.cpp">
+      <Filter>GameEngine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIEngineProfiler.cpp">
+      <Filter>GameEngine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UISceneOutliner.cpp">
+      <Filter>GameEngine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIinspectorWindow.cpp">
+      <Filter>GameEngine\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +241,27 @@
     </ClInclude>
     <ClInclude Include="..\imgui\imstb_truetype.h">
       <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>GameEngine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>GameEngine\GraphicsEngine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="UIToolbar.h">
+      <Filter>GameEngine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIScreen.h">
+      <Filter>GameEngine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIEngineProfiler.h">
+      <Filter>GameEngine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UISceneOutliner.h">
+      <Filter>GameEngine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIinspectorWindow.h">
+      <Filter>GameEngine\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

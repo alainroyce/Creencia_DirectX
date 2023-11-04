@@ -6,6 +6,7 @@
 
 GameObject::GameObject(string name)
 {
+	this->name = name;
 	m_position = Vector3D::zeros();
 	m_scale = Vector3D::ones();
 	m_rotation = Vector3D::zeros();
@@ -15,7 +16,10 @@ GameObject::~GameObject()
 {
 }
 
-
+std::string GameObject::GetName()
+{
+	return this->name;
+}
 
 void GameObject::SetPosition(float x, float y, float z)
 {
@@ -61,3 +65,13 @@ Vector3D GameObject::GetLocalRotation()
 {
 	return m_rotation;
 }
+
+void GameObject::update(Matrix4x4 cam)
+{
+}
+
+void GameObject::draw()
+{
+}
+
+

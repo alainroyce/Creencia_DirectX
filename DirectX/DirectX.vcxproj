@@ -148,6 +148,7 @@
     <ClCompile Include="DeviceContext.cpp" />
     <ClCompile Include="EngineTime.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="GraphicsEngine.cpp" />
     <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="InputSystem.cpp" />
@@ -156,6 +157,12 @@
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="QuadRenderer.cpp" />
     <ClCompile Include="SwapChain.cpp" />
+    <ClCompile Include="UIEngineProfiler.cpp" />
+    <ClCompile Include="UIinspectorWindow.cpp" />
+    <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UISceneOutliner.cpp" />
+    <ClCompile Include="UIScreen.cpp" />
+    <ClCompile Include="UIToolbar.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
     <ClCompile Include="VertexShader.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -175,6 +182,7 @@
     <ClInclude Include="DeviceContext.h" />
     <ClInclude Include="EngineTime.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="GraphicsEngine.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="InputListener.h" />
@@ -184,6 +192,12 @@
     <ClInclude Include="Point.h" />
     <ClInclude Include="QuadRenderer.h" />
     <ClInclude Include="SwapChain.h" />
+    <ClInclude Include="UIEngineProfiler.h" />
+    <ClInclude Include="UIinspectorWindow.h" />
+    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UISceneOutliner.h" />
+    <ClInclude Include="UIScreen.h" />
+    <ClInclude Include="UIToolbar.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Vector4D.h" />
     <ClInclude Include="VertexBuffer.h" />

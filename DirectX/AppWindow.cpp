@@ -4,6 +4,7 @@
 #include "Matrix4x4.h"
 #include <cmath>
 #include "InputSystem.h"
+#include "UIManager.h"
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
@@ -82,84 +83,12 @@ void AppWindow::onCreate()
 
 	m_world_cam.setTranslation(Vector3D(0, 0, -2));
 	
-	/*
-	Cube* cube = new Cube();
-	cube->SetScale(Vector3D(1.0f, 1.0f, 1.0f));
-	cube->SetPosition(Vector3D(-1.5f, 1.0f, -3.0f));
-	cube->SetRotation(Vector3D(0, 0, 0));
-	cube->SetAnimSpeed(0.0f);
-
-	CubeList.push_back(cube);
-	
-	Cube* cube2 = new Cube();
-	cube2->SetScale(Vector3D(1.0f, 1.0f, 1.0f));
-	cube2->SetPosition(Vector3D(0, 1.0f, 0));
-	cube2->SetAnimSpeed(0.0f);
-
-
-	Cube* cube3 = new Cube();
-	cube3->SetScale(Vector3D(1.0f, 1.0f, 1.0f));
-	cube3->SetPosition(Vector3D(2.6f, 1.0f, 2.0));
-	cube3->SetAnimSpeed(0.0f);
-
-
-	Cube* cube4 = new Cube();
-	cube4->SetScale(Vector3D(5.0f, 0.05f, 5.0f));
-	cube4->SetPosition(Vector3D(0, -0.5f, 0));
-	cube4->SetAnimSpeed(0.0f);
-
-	
-	Cube* cube5 = new Cube();
-	cube5->SetScale(Vector3D(0.2f, 0.2f, 0.2f));
-	cube5->SetPosition(Vector3D(-0.3f, -0.3f, 0));
-	cube5->SetAnimSpeed(0.0f);
-
-	Cube* cube6 = new Cube();
-	cube6->SetScale(Vector3D(0.2f, 0.2f, 0.2f));
-	cube6->SetPosition(Vector3D(-0.5f, -0.5f, 0));
-	cube6->SetAnimSpeed(0.0f);
-
-	Cube* cube7 = new Cube();
-	cube7->SetScale(Vector3D(0.2f, 0.2f, 0.2f));
-	cube7->SetPosition(Vector3D(0.5f, 0.5f, 0.5));
-	cube7->SetAnimSpeed(0.0f);
-
-	Cube* cube8 = new Cube();
-	cube8->SetScale(Vector3D(0.3f, 0.3f, 0.3f));
-	cube8->SetPosition(Vector3D(0.5f, 0.7f, 0.2));
-	cube8->SetAnimSpeed(0.0f);
-
-	Cube* cube9 = new Cube();
-	cube9->SetScale(Vector3D(0.2f, 0.2f, 0.2f));
-	cube9->SetPosition(Vector3D(0.1f, 0.1f, 0.1));
-	cube9->SetAnimSpeed(0.0f);
-
-	Cube* cube10 = new Cube();
-	cube10->SetScale(Vector3D(0.2f, 0.2f, 0.2f));
-	cube10->SetPosition(Vector3D(0.8f, 0.2f, 0.2));
-	cube10->SetAnimSpeed(0.0f);
-	
-
-	
-	
-	
-	CubeList.push_back(cube2);
-	CubeList.push_back(cube3);
-	CubeList.push_back(cube4);
-	
-	CubeList.push_back(cube5);
-	CubeList.push_back(cube6);
-	CubeList.push_back(cube7);
-	CubeList.push_back(cube8);
-	CubeList.push_back(cube9);
-	CubeList.push_back(cube10);
-	
-	*/
-
 	
 	std::srand(static_cast<unsigned>(std::time(nullptr)));
 
 	// Create and add 50 cubes to the CubeList
+	
+	/*
 	for (int i = 0; i < 50; i++) {
 		Cube* cube = new Cube();
 
@@ -174,18 +103,14 @@ void AppWindow::onCreate()
 
 		CubeList.push_back(cube);
 	}
+	*/
+	
 
-	//IMGUI
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
 
 	// Setup Platform/Renderer backends
-	ImGui_ImplWin32_Init(this->m_hwnd);
-	ImGui_ImplDX11_Init(GraphicsEngine::get()->getDevice(), GraphicsEngine::get()->getD3D11DeviceContext());
+	GameObjectManager::initialize();
+	UIManager::initialize(this->m_hwnd);
+	//ImGui_ImplDX11_Init(GraphicsEngine::get()->getDevice(), GraphicsEngine::get()->getD3D11DeviceContext());
 
 
 }
@@ -195,66 +120,6 @@ void AppWindow::onUpdate()
 	Window::onUpdate();
 
 	
-
-
-	/*
-	// Update the animation time
-	animationTime += m_delta_time;
-
-
-	
-	// Define animation parameters
-	float animationDuration = 4.0f;  // Time for one full cycle (1.0 to 0.25 to 1.0)
-
-	// Calculate t based on a sine wave within the range [0, 1]
-	const float pi = 3.14;
-	float t = (1.0f + sin(animationTime * 2 * pi / animationDuration)) / 2.0f;
-
-	
-	Vector3D scale = Vector3D::lerp(Vector3D(1.0f, 1.0f, 1.0f), Vector3D(0.25f, 0.25f, 0.25f), t);
-
-	float posX = sin(animationTime * 2 * pi / animationDuration);
-	float posY = cos(animationTime * 2 * pi / animationDuration);
-	Vector3D position(posX, posY, 0.0f);
-
-	for (Cube* cube : CubeList) {
-		cube->SetScale(scale);
-		cube->SetPosition(position);
-	}
-	*/
-
-	/*
-	// Update the animation time
-	animationTime += m_delta_time;
-
-
-	float animationDuration = 5.0f;  
-
-
-	const float pi = 3.14;
-	float t = (1.0f + sin(animationTime * 2 * pi / animationDuration)) / 2.0f;
-	Vector3D scale;
-	Vector3D position;
-	Vector3D rotation;
-
-	
-	if (t <= 0.5f) {
-		scale = Vector3D::lerp(Vector3D(1.0f, 1.0f, 1.0f), Vector3D(4.0f, 0.05f, 4.0f), t * 2);
-		position = Vector3D(0.0f, 0.0f, 0.0f);  
-		rotation = Vector3D(0.0f, 0.0f, 0.0f);  
-	}
-	else {
-		scale = Vector3D::lerp(Vector3D(4.0f, 0.05f, 4.0f), Vector3D(1.0f, 1.0f, 1.0f), (t - 0.5f) * 2);
-		position = Vector3D(0.0f, 0.0f, 0.0f);  
-		rotation = Vector3D(0.0f, 0.0f, 0.0f);  
-	}
-
-	for (Cube* cube : CubeList) {
-		cube->SetScale(scale);
-		cube->SetPosition(position);
-		cube->SetRotation(rotation);
-	}
-	*/
 	// run the update for the InputSystem
 	InputSystem::getInstance()->update();
 
@@ -267,20 +132,29 @@ void AppWindow::onUpdate()
 
 	
 
+	GameObjectManager::getInstance()->update(m_world_cam);
+	GameObjectManager::getInstance()->draw();
+	UIManager::getInstance()->drawUI();
 
 	update();
 
+
+	/*
 	for (Cube* cube : CubeList)
 	{
 		cube->update(m_world_cam);
 		cube->draw();
 	}
-	
+	*/
 
-
+	/*
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+
+
+
+
 
 	if (show_demo_window)
 	{
@@ -321,10 +195,10 @@ void AppWindow::onUpdate()
 	}
 
 	ImGui::End();
+	*/
 
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-	
+
+
 	m_swap_chain->present(true);
 
 
@@ -397,7 +271,6 @@ void AppWindow::onMouseMove(const Point deltaPos)
 	CameraRot.m_x+= deltaPos.getY() * 0.1f * m_delta_time;
 	CameraRot.m_y += deltaPos.getX() * 0.1f * m_delta_time;
 
-	cout << CameraRot.m_x << " : " << CameraRot.m_y << endl;
 }
 
 void AppWindow::onLeftMouseDown(const Point deltaPos)
