@@ -211,10 +211,7 @@ void AppWindow::onUpdate()
 void AppWindow::onDestroy()
 {
 
-	ImGui_ImplDX11_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
-
+	UIManager::getInstance()->destroy();
 	Window::onDestroy();
 	m_vb->release();
 	m_ib->release();
@@ -266,15 +263,19 @@ void AppWindow::onKeyUp(int key)
 
 void AppWindow::onMouseMove(const Point deltaPos)
 {
-	int width = (this->getClientWindowRect().right - this->getClientWindowRect().left);
-	int height = (this->getClientWindowRect().bottom - this->getClientWindowRect().top);
-	CameraRot.m_x+= deltaPos.getY() * 0.1f * m_delta_time;
-	CameraRot.m_y += deltaPos.getX() * 0.1f * m_delta_time;
+	if (isMouseLeftHold)
+	{
+		int width = (this->getClientWindowRect().right - this->getClientWindowRect().left);
+		int height = (this->getClientWindowRect().bottom - this->getClientWindowRect().top);
+		CameraRot.m_x += deltaPos.getY() * 0.1f * m_delta_time;
+		CameraRot.m_y += deltaPos.getX() * 0.1f * m_delta_time;
+	}
 
 }
 
 void AppWindow::onLeftMouseDown(const Point deltaPos)
 {
+	
 }
 
 void AppWindow::onLeftMouseUp(const Point deltaPos)
@@ -283,10 +284,12 @@ void AppWindow::onLeftMouseUp(const Point deltaPos)
 
 void AppWindow::onRightMouseDown(const Point deltaPos)
 {
+	isMouseLeftHold = true;
 }
 
 void AppWindow::onRightMouseUp(const Point deltaPos)
 {
+	isMouseLeftHold = false;
 }
 
 

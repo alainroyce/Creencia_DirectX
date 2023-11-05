@@ -13,10 +13,11 @@ void UISceneOutliner::drawUI()
     ImGui::Begin("Scene Outliner", NULL, windowFlags);
     ImGui::SetWindowSize(ImVec2(210, 500));
     
-    for (int i = 0; i < this->ObjectList.size(); i++)
+    for (const auto& object : this->ObjectList)
     {
-        if (ImGui::Button(this->ObjectList[i]->GetName().c_str())) {
-            GameObjectManager::getInstance()->setSelectGameObject(this->ObjectList[i]);
+        if (ImGui::Button(object->GetName().c_str()))
+        {
+            GameObjectManager::getInstance()->setSelectGameObject(object);
         }
     }
 
