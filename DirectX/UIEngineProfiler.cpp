@@ -13,13 +13,11 @@ void UIEngineProfiler::drawUI()
     ImGui::SetWindowSize(ImVec2(500, 100));
        
     ImGuiIO& io = ImGui::GetIO();
-        
-    float avgFrameTimeMs = io.Framerate / 1000.0f;   
+    float avgFrameTimeMs =  1000.0f / io.Framerate;   
     int frameRate = static_cast<int>(io.Framerate);
-
        
     std::string ms_text = "Average MS per frame: " + std::to_string(avgFrameTimeMs) + "ms | Framerate: " + std::to_string(frameRate) + " fps ";
     ImGui::Text(ms_text.c_str());  
+
     ImGui::End();
-    
 }

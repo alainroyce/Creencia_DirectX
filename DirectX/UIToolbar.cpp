@@ -47,8 +47,12 @@ void UIToolbar::drawUI()
         {
             GameObjectManager::getInstance()->createGameObject(GameObjectManager::PLANE);
         }
-        if (ImGui::BeginMenu("Create Light")) {
-            if (ImGui::MenuItem("Point Light")) {}
+        if (ImGui::BeginMenu("Create Light")) 
+        {
+            if (ImGui::MenuItem("Point Light")) 
+            {
+
+            }
             ImGui::EndMenu();
         }
 
