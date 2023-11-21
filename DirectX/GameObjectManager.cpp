@@ -1,4 +1,5 @@
 #include "GameObjectManager.h"
+#include "PhysicsComponent.h"
 
 GameObjectManager* GameObjectManager::sharedInstance = nullptr;
 
@@ -33,25 +34,31 @@ void GameObjectManager::createGameObject(ObjectType type)
 {
 	
 	GameObject* object = nullptr;
-	
+	PhysicsComponent* physicsComp = nullptr;
 	switch (type)
 	{
 	case CUBE:
         object = new Cube("Cube");
 		object->SetScale(Vector3D(0.5f, 0.5f, 0.5f));
-		object->SetPosition(Vector3D(0, 0, 0));
+		object->SetPosition(Vector3D(0, 3, 0));
+		physicsComp = new PhysicsComponent(object->GetName(), object);
+		//physicsComp->getRigidBody()->setType(BodyType::DYNAMIC);
+
 		sharedInstance->ObjectList.push_back(object);
 		break;
 	case PLANE:
 		object = new Cube("Plane");
-		object->SetScale(Vector3D(2.0f, 0.1f, 2.0f));
-		object->SetPosition(Vector3D(0, 0, 0));
+		object->SetScale(Vector3D(10.0f, 0.1f, 10.0f));
+		object->SetPosition(Vector3D(0, -5, 0));
+		physicsComp = new PhysicsComponent(object->GetName(), object);
+		physicsComp->getRigidBody()->setType(BodyType::STATIC);
 		sharedInstance->ObjectList.push_back(object);
 		break;
 	
 
 	default:
 		object = nullptr;
+		physicsComp = nullptr;
 		break;
 	}
 	

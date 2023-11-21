@@ -45,25 +45,12 @@ void GameObject::RecomputeMatrix(float matrix[16])
 	matrix4x4[3][3] = matrix[15];
 
 
-
-	Matrix4x4 newMatrix; newMatrix.setMatrix(matrix4x4);
-	Matrix4x4 scaleMatrix; scaleMatrix.setScale(m_scale);
-	newMatrix *= scaleMatrix;
-	Matrix4x4 rotMatrix; rotMatrix.setRotationX(m_rotation.m_x);
-	newMatrix *= rotMatrix;
-	rotMatrix.setRotationY(m_rotation.m_y);
-	newMatrix *= rotMatrix;
-	rotMatrix.setRotationZ(m_rotation.m_z);
-	newMatrix *= rotMatrix;
-	Matrix4x4 transMatrix; transMatrix.setTranslation(m_position);
-	newMatrix *= transMatrix;
-	m_matrix = newMatrix;
-
-	/*
+	
 	Matrix4x4 newMatrix; newMatrix.setMatrix(matrix4x4);
 	Matrix4x4 scaleMatrix; scaleMatrix.setScale(this->GetLocalScale());
 	Matrix4x4 transMatrix; transMatrix.setTranslation(this->GetLocalPosition());
 	this->m_matrix = scaleMatrix.multiplyTo(transMatrix.multiplyTo(newMatrix));
+	
 	
 	
 	Vector3D posMatrix;
@@ -73,28 +60,38 @@ void GameObject::RecomputeMatrix(float matrix[16])
 
 
 	SetPosition(posMatrix);
-	*/
+	
+	
 }
 
 float* GameObject::GetPhysicsLocalMatrix()
 {
-	Matrix4x4 allMatrix; allMatrix.setIdentity();
-	Matrix4x4 translationMatrix; translationMatrix.setIdentity();
-	translationMatrix.setTranslation(this->GetLocalPosition());
-	Matrix4x4 scaleMatrix; scaleMatrix.setScale(Vector3D::ones()); //physics 3D only accepts uniform scale for rigidbody
-	Vector3D rotation = this->GetLocalRotation();
-	Matrix4x4 xMatrix; xMatrix.setRotationX(rotation.m_x);
-	Matrix4x4 yMatrix; yMatrix.setRotationY(rotation.m_y);
-	Matrix4x4 zMatrix; zMatrix.setRotationZ(rotation.m_z);
 
-	//Scale --> Rotate --> Transform as recommended order.
-	Matrix4x4 rotMatrix; rotMatrix.setIdentity();
-	rotMatrix = rotMatrix.multiplyTo(xMatrix.multiplyTo(yMatrix.multiplyTo(zMatrix)));
+	
+	Matrix4x4 matrix;
+	matrix.setIdentity();
+	matrix.setScale(this->GetLocalScale());
+	
+	
+	Matrix4x4 rotZ;
+	rotZ.setIdentity();
+	rotZ.setRotationZ(m_rotation.m_z);
+	matrix = rotZ;
+	
 
-	allMatrix = allMatrix.multiplyTo(scaleMatrix.multiplyTo(rotMatrix));
-	allMatrix = allMatrix.multiplyTo(translationMatrix);
+	Matrix4x4 rotY;
+	rotY.setIdentity();
+	rotY.setRotationY(m_rotation.m_y);
+	matrix = rotY;
 
-	return allMatrix.getMatrix();
+	Matrix4x4 rotX;
+	rotX.setIdentity();
+	rotX.setRotationX(m_rotation.m_x);
+	matrix *= rotX;
+
+	matrix.setTranslation(this->GetLocalPosition());
+
+	return matrix.getMatrix();
 }
 
 

@@ -46,7 +46,7 @@ void PhysicsComponent::perform(float deltaTime)
 	transform.getOpenGLMatrix(matrix);
 
 	this->getOwner()->RecomputeMatrix(matrix);
-	std::cout << "My component is updating: " << this->name << "\n";
+	//std::cout << "My component is updating: " << this->name << "\n";
 }
 
 RigidBody* PhysicsComponent::getRigidBody()
