@@ -33,6 +33,11 @@ public:
 	virtual void draw();
 	std::string GetName();
 
+	// openGL matrix to our matrix implementation
+	void RecomputeMatrix(float matrix[16]);
+	// our matrix implementation to openGL matrix
+	float* GetPhysicsLocalMatrix();
+
 protected:
 	std::string name;
 	Vector3D m_position;

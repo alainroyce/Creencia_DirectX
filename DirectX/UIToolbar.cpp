@@ -1,5 +1,8 @@
 #include "UIToolbar.h"
 #include "GameObjectManager.h"
+#include "PhysicsComponent.h"
+
+
 
 UIToolbar::UIToolbar(std::string name) : UIScreen(name)
 {
@@ -30,12 +33,24 @@ void UIToolbar::drawUI()
         }
         ImGui::EndMenu();
     }
+    //GameObjectManager::getInstance()->createGameObject(GameObjectManager::CUBE);
 
     if (ImGui::BeginMenu("Game Object")) {
+       // GameObjectManager* physics = GameObjectManager::getInstance();
+       // GameObject* physicsCube;
 
         if (ImGui::MenuItem("Create Cube"))
         {
-            GameObjectManager::getInstance()->createGameObject(GameObjectManager::CUBE);
+           GameObjectManager::getInstance()->createGameObject(GameObjectManager::CUBE);
+
+           //physics->createGameObject( GameObjectManager::CUBE);
+          
+
+          // physicsCube = physics->getSelectedGameObject();
+          
+           //new PhysicsComponent("PhysicsComponent", physicsCube);
+         
+
         }
 
         if (ImGui::MenuItem("Create Sphere"))

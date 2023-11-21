@@ -44,7 +44,7 @@ void GameObjectManager::createGameObject(ObjectType type)
 		break;
 	case PLANE:
 		object = new Cube("Plane");
-		object->SetScale(Vector3D(2.0f, 0.01f, 2.0f));
+		object->SetScale(Vector3D(2.0f, 0.1f, 2.0f));
 		object->SetPosition(Vector3D(0, 0, 0));
 		sharedInstance->ObjectList.push_back(object);
 		break;
@@ -57,7 +57,7 @@ void GameObjectManager::createGameObject(ObjectType type)
 	
 	std::cout << ObjectList.size() << std::endl;
 	
-	
+	setSelectGameObject(object);
 	
 }
 

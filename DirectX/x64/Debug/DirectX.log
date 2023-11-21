@@ -1,2 +1,9 @@
-﻿  UIEngineProfiler.cpp
+﻿  Cube.cpp
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(148,53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(149,53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(150,53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Matrix4x4.h(151,53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\alain\source\repos\DirectX\DirectX\Window.h(2,1): warning C4005: 'NOMINMAX': macro redefinition
+C:\Users\alain\source\repos\DirectX\DirectX\Window.h(2,1): message : 'NOMINMAX' previously declared on the command line
+C:\Users\alain\source\repos\DirectX\DirectX\Cube.cpp(118,38): warning C4244: '=': conversion from 'double' to 'unsigned int', possible loss of data
   DirectX.vcxproj -> C:\Users\alain\source\repos\DirectX\x64\Debug\DirectX.exe

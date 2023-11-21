@@ -2,6 +2,7 @@
 #include <memory>
 #include "Vector3D.h"
 #include "Vector4D.h"
+#include <iostream>
 
 class Matrix4x4
 {
@@ -10,16 +11,27 @@ public:
     {
 
     }
+    ~Matrix4x4()
+    {
+    }
 
     void setIdentity()
     {
-        ::memset(m_mat, 0, sizeof(float) * 16);
+        this->matrixInitialize();
+        //::memset(m_mat, 0, sizeof(float) * 16);
         m_mat[0][0] = 1;
         m_mat[1][1] = 1;
         m_mat[2][2] = 1;
         m_mat[3][3] = 1;
     }
-
+    void setMatrix(const Matrix4x4& matrix)
+    {
+        ::memcpy(m_mat, matrix.m_mat, sizeof(float) * 16);
+    }
+    void setMatrix(float matrix[4][4])
+    {
+        ::memcpy(this->m_mat, matrix, sizeof(float) * 16);
+    }
     void setTranslation(const Vector3D& translation)
     {
         //setIdentity();
@@ -27,7 +39,6 @@ public:
         m_mat[3][1] = translation.m_y;
         m_mat[3][2] = translation.m_z;
     }
-
     void setScale(const Vector3D& scale)
     {
         //setIdentity();
@@ -35,7 +46,6 @@ public:
         m_mat[1][1] = scale.m_y;
         m_mat[2][2] = scale.m_z;
     }
-
     void setRotationX(float x)
     {
         m_mat[1][1] = cos(x);
@@ -43,7 +53,6 @@ public:
         m_mat[2][1] = -sin(x);
         m_mat[2][2] = cos(x);
     }
-
     void setRotationY(float y)
     {
         m_mat[0][0] = cos(y);
@@ -51,7 +60,6 @@ public:
         m_mat[2][0] = sin(y);
         m_mat[2][2] = cos(y);
     }
-
     void setRotationZ(float z)
     {
         m_mat[0][0] = cos(z);
@@ -59,29 +67,40 @@ public:
         m_mat[1][0] = -sin(z);
         m_mat[1][1] = cos(z);
     }
-
-
-
-
-    void operator *=(const Matrix4x4& matrix)
+    void setQuaternionRotation(float theta, float x, float y, float z)
     {
-        Matrix4x4 out;
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                out.m_mat[i][j] =
-                    m_mat[i][0] * matrix.m_mat[0][j] + m_mat[i][1] * matrix.m_mat[1][j] +
-                    m_mat[i][2] * matrix.m_mat[2][j] + m_mat[i][3] * matrix.m_mat[3][j];
-            }
-        }
-        setMatrix(out);
+        float normU, qx, qy, qz, qw;
+
+        //normalizing axis vector
+        normU = sqrt((x * x) + (y * y) + (z * z));
+        qx = x / normU;
+        qy = y / normU;
+        qz = z / normU;
+
+        //quaternion q setup
+        qw = cos(theta / 2);
+        qx = qx * sin(theta / 2);
+        qy = qy * sin(theta / 2);
+        qz = qz * sin(theta / 2);
+
+        //set the rotation matrix
+
+        this->m_mat[0][0] = (qw * qw) + (qx * qx) - (qy * qy) - (qz * qz);
+        this->m_mat[0][1] = (2 * qx * qy) - (2 * qw * qz);
+        this->m_mat[0][2] = (2 * qx * qz) + (2 * qw * qy);
+        this->m_mat[0][3] = 0;
+
+        this->m_mat[1][0] = (2 * qx * qy) + (2 * qw * qz);
+        this->m_mat[1][1] = (qw * qw) - (qx * qx) + (qy * qy) - (qz * qz);
+        this->m_mat[1][2] = (2 * qy * qz) - (2 * qw * qx);
+        this->m_mat[1][3] = 0;
+
+        this->m_mat[2][0] = (2 * qx * qz) - (2 * qw * qy);
+        this->m_mat[2][1] = (2 * qy * qz) + (2 * qw * qx);
+        this->m_mat[2][2] = (qw * qw) - (qx * qx) - (qy * qy) + (qz * qz);
+        this->m_mat[2][3] = 0;
     }
 
-    void setMatrix(const Matrix4x4& matrix)
-    {
-        ::memcpy(m_mat, matrix.m_mat, sizeof(float) * 16);
-    }
 
     void setOrthoLH(float width, float height, float near_plane, float far_plane)
     {
@@ -91,24 +110,6 @@ public:
         m_mat[2][2] = 1.0f / (far_plane - near_plane);
         m_mat[3][2] = -(near_plane / (far_plane - near_plane));
     }
-
-    ~Matrix4x4()
-    {
-    }
-
-    Vector3D getZDirection()
-    {
-        return Vector3D(m_mat[2][0], m_mat[2][1], m_mat[2][2]);
-    }
-    Vector3D getXDirection()
-    {
-        return Vector3D(m_mat[0][0], m_mat[0][1], m_mat[0][2]);
-    }
-    Vector3D getTranslation()
-    {
-        return Vector3D(m_mat[3][0], m_mat[3][1], m_mat[3][2]);
-    }
-
     void setPerspectiveFovLH(float fov, float aspect, float znear, float zfar)
     {
         float yscale = 1.0f / tan(fov / 2.0f);
@@ -119,7 +120,6 @@ public:
         m_mat[2][3] = 1.0f;
         m_mat[3][2] = (-znear * zfar) / (zfar - znear);
     }
-
     void inverse()
     {
         int a, i, j;
@@ -154,6 +154,80 @@ public:
         this->setMatrix(out);
     }
 
+
+    Matrix4x4 multiplyTo(Matrix4x4 matrix)
+    {
+        Matrix4x4 out;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                out.m_mat[i][j] =
+                    this->m_mat[i][0] * matrix.m_mat[0][j] + this->m_mat[i][1] * matrix.m_mat[1][j] +
+                    this->m_mat[i][2] * matrix.m_mat[2][j] + this->m_mat[i][3] * matrix.m_mat[3][j];
+            }
+        }
+
+        return out;
+    };
+    Matrix4x4 clone()
+    {
+        Matrix4x4 copy;
+        ::memcpy(copy.m_mat, this->m_mat, sizeof(float) * 16);
+
+        return copy;
+    }
+    Vector3D getZDirection()
+    {
+        return Vector3D(m_mat[2][0], m_mat[2][1], m_mat[2][2]);
+    }
+    Vector3D getXDirection()
+    {
+        return Vector3D(m_mat[0][0], m_mat[0][1], m_mat[0][2]);
+    }
+    Vector3D getTranslation()
+    {
+        return Vector3D(m_mat[3][0], m_mat[3][1], m_mat[3][2]);
+    }
+
+    float* getMatrix()
+    {
+        //re-arrange to be compatible with react physics
+        return *this->m_mat; // can be read as float [16]
+    }
+
+    void operator *=(const Matrix4x4& matrix)
+    {
+        Matrix4x4 out;
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                out.m_mat[i][j] =
+                    m_mat[i][0] * matrix.m_mat[0][j] + m_mat[i][1] * matrix.m_mat[1][j] +
+                    m_mat[i][2] * matrix.m_mat[2][j] + m_mat[i][3] * matrix.m_mat[3][j];
+            }
+        }
+        setMatrix(out);
+    }
+
+    void debugPrint()
+    {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                std::cout << this->m_mat[i][j] << " ";
+            }
+            std::cout << "\n";
+        }
+    }
+
+public:
+    void matrixInitialize()
+    {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                this->m_mat[i][j] = 0.0f;
+            }
+        }
+    }
     float getDeterminant()
     {
         Vector4D minor, v1, v2, v3;
@@ -170,21 +244,5 @@ public:
         return det;
     }
 
-    Matrix4x4 multiplyTo(Matrix4x4 matrix)
-    {
-        Matrix4x4 out;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                out.m_mat[i][j] =
-                    this->m_mat[i][0] * matrix.m_mat[0][j] + this->m_mat[i][1] * matrix.m_mat[1][j] +
-                    this->m_mat[i][2] * matrix.m_mat[2][j] + this->m_mat[i][3] * matrix.m_mat[3][j];
-            }
-        }
-
-        return out;
-    };
-
-
-public:
     float m_mat[4][4] = {};
 };

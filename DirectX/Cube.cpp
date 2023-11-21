@@ -116,6 +116,9 @@ void Cube::update(Matrix4x4 cam)
 	constant cc;
 	//cc.m_time = GetTickCount();
 	cc.m_time = EngineTime::getDeltaTime();
+	
+
+	
 	cc.m_world.setIdentity();
 	cc.m_world.setScale(this->GetLocalScale());
 
@@ -132,7 +135,15 @@ void Cube::update(Matrix4x4 cam)
 	rotX.setRotationX(m_rotation.m_x);
 	cc.m_world *= rotX;
 
+	Matrix4x4 rotZ;
+	rotZ.setIdentity();
+	rotZ.setRotationZ(m_rotation.m_z);
+	cc.m_world *= rotZ;
+
 	cc.m_world.setTranslation(this->GetLocalPosition());
+	
+	
+	//cc.m_world = m_matrix;
 
 	cc.m_view = cam;
 

@@ -61,6 +61,12 @@
     <Filter Include="GameEngine\UI">
       <UniqueIdentifier>{f785ec19-1346-4b67-ac77-33ee10b3f433}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\PhysicsSystem">
+      <UniqueIdentifier>{9a5fb290-c1b6-4ea0-9990-7cfdd8c6151d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\ComponentSystem">
+      <UniqueIdentifier>{992659ca-5a67-4836-ae38-675eb8711f9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -155,6 +161,18 @@
     </ClCompile>
     <ClCompile Include="UIinspectorWindow.cpp">
       <Filter>GameEngine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="AComponent.cpp">
+      <Filter>GameEngine\GraphicsEngine\ComponentSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseComponentSystem.cpp">
+      <Filter>GameEngine\GraphicsEngine\ComponentSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsSystem.cpp">
+      <Filter>GameEngine\GraphicsEngine\PhysicsSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>GameEngine\GraphicsEngine\PhysicsSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -262,6 +280,18 @@
     </ClInclude>
     <ClInclude Include="UIinspectorWindow.h">
       <Filter>GameEngine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="AComponent.h">
+      <Filter>GameEngine\GraphicsEngine\ComponentSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseComponentSystem.h">
+      <Filter>GameEngine\GraphicsEngine\ComponentSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsSystem.h">
+      <Filter>GameEngine\GraphicsEngine\PhysicsSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComponent.h">
+      <Filter>GameEngine\GraphicsEngine\PhysicsSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

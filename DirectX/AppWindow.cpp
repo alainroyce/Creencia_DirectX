@@ -8,6 +8,8 @@
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
+#include <reactphysics3d/reactphysics3d.h>
+#include "PhysicsSystem.h"
 
 
 struct vertex
@@ -85,31 +87,12 @@ void AppWindow::onCreate()
 	
 	
 	std::srand(static_cast<unsigned>(std::time(nullptr)));
-
-	// Create and add 50 cubes to the CubeList
 	
-	/*
-	for (int i = 0; i < 50; i++) {
-		Cube* cube = new Cube();
-
-		// Randomly set the position within the range [-0.5, 0.5] for x, y, and z axes
-		float randomX = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) - 0.5f;
-		float randomY = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) - 0.5f;
-		float randomZ = static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX) - 0.5f;
-
-		cube->SetScale(Vector3D(0.2f, 0.2f, 0.2f)); // You can adjust the scale as needed.
-		cube->SetPosition(Vector3D(randomX, randomY, randomZ));
-		cube->SetAnimSpeed(0.0f);
-
-		CubeList.push_back(cube);
-	}
-	*/
 	
-
-
 	// Setup Platform/Renderer backends
 	GameObjectManager::initialize();
 	UIManager::initialize(this->m_hwnd);
+	BaseComponentSystem::initialize();
 	//ImGui_ImplDX11_Init(GraphicsEngine::get()->getDevice(), GraphicsEngine::get()->getD3D11DeviceContext());
 
 
@@ -131,77 +114,21 @@ void AppWindow::onUpdate()
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
 	
-
+	
 	GameObjectManager::getInstance()->update(m_world_cam);
+	
 	GameObjectManager::getInstance()->draw();
 	UIManager::getInstance()->drawUI();
-
+	BaseComponentSystem::getInstance()->getPhysicsSystem()->updateAllComponents();
 	update();
 
-
-	/*
-	for (Cube* cube : CubeList)
-	{
-		cube->update(m_world_cam);
-		cube->draw();
-	}
-	*/
-
-	/*
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-
-
-
-
-
-	if (show_demo_window)
-	{
-		ImGui::ShowDemoWindow();
-	}
-
-
-	static float f = 0.0f;
-	static int counter = 0;
-
-	ImGuiWindowFlags flag = 64;
-	ImGui::Begin("Scene Settings", 0, flag);
-	ImGui::Checkbox("Demo Window", &show_demo_window);
-
-	ImGui::ColorEdit3("clear color", (float*)&clear_color);
-
-	if (isAnim)
-	{
-		if (ImGui::Button("Pause Animation"))
-		{
-			isAnim = false;
-			for (Cube* cube : CubeList)
-			{
-				cube->SetAnimSpeed(0.0f);
-			}
-		}
-	}
-	else
-	{
-		if (ImGui::Button("Start Animation"))
-		{
-			isAnim = true;
-			for (Cube* cube : CubeList)
-			{
-				cube->SetAnimSpeed(1.0f);
-			}
-		}
-	}
-
-	ImGui::End();
-	*/
 
 
 
 	m_swap_chain->present(true);
 
 
+	//for camera
 	m_old_delta = m_new_delta;
 	m_new_delta = ::GetTickCount();
 
@@ -220,6 +147,8 @@ void AppWindow::onDestroy()
 	m_vs->release();
 	m_ps->release();
 	GraphicsEngine::get()->release();
+	BaseComponentSystem::destroy();
+
 }
 
 void AppWindow::onKeyDown(int key)
